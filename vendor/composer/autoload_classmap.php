@@ -7,4 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'MSSWC\\Includes\\MSSWC_MultipleSaleScheduler' => $baseDir . '/includes/MSSWC_MultipleSaleScheduler.php',
+    'MSSWC\\Includes\\MSSWC_ProductMetaFields' => $baseDir . '/includes/MSSWC_ProductMetaFields.php',
+    'MSSWC\\Includes\\MSSWC_SaleScheduler' => $baseDir . '/includes/MSSWC_SaleScheduler.php',
 );

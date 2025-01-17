@@ -6,5 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Multiplesalescheduler\\Mss\\' => array($baseDir . '/includes'),
+    'MSSWC\\Includes\\' => array($baseDir . '/includes'),
 );

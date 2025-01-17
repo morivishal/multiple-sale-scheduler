@@ -47,7 +47,7 @@ jQuery(document).ready(($) => {
     toggleRemoveButtons();
     
     $(".start-date, .end-date").removeClass("hasDatepicker");
-    $(".start-date, .end-date").attr("id", "");
+    // $(".start-date, .end-date").attr("id", "");
   });
 
   scheduleContainer.on("click", ".remove_sale", (e) => {

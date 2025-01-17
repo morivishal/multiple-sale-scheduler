@@ -2,7 +2,7 @@
     "name": "multiplesalescheduler/mss",
     "autoload": {
         "psr-4": {
-            "Multiplesalescheduler\\Mss\\": "./includes"
+            "MSSWC\\Includes\\": "./includes"
         }
     },
     "authors": [

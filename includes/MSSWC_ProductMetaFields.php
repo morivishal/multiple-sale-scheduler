@@ -2,29 +2,29 @@
 /**
  * Add new fields in product meta tabs.
  *
- * @class MSS_Product_Meta_Fields
- * @package MSS\Classes
+ * @class ProductMetaFields
+ * @package MSSW\Classes
  * @since 1.0.0
  */
 
-namespace Multiplesalescheduler\Mss;
+namespace MSSWC\Includes;
 
 /**
  * Add new fields in product meta tabs.
  */
-class ProductMetaFields {
+class MSSWC_ProductMetaFields {
 
 	/**
 	 * Constructer function to init Sale_Scheduler.
 	 */
 	public function __construct() {
-		add_action( 'woocommerce_product_options_pricing', array( $this, 'mss_add_product_meta_fields' ) );
+		add_action( 'woocommerce_product_options_pricing', array( $this, 'msswc_add_product_meta_fields' ) );
 	}
 
 	/**
 	 * Add custom fields in product edit page.
 	 */
-	public function mss_add_product_meta_fields() {
+	public function msswc_add_product_meta_fields() {
 		global $post;
 		$schedule_prices = get_post_meta( $post->ID, '_schedule_sales', true ) ? get_post_meta( $post->ID, '_schedule_sales', true ) : array(
 			array(
@@ -57,6 +57,7 @@ class ProductMetaFields {
 				placeholder="End Date ( YYYY-MM-DD )*" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])"
 				autocomplete="off" style="width: 30%; margin-left: 1%;">
 				<a href="#" class="remove_sale remove_row delete">Remove</a>
+				<?php wp_nonce_field( 'msswc_save_scheduled_sales_nonce', 'msswc_meta_nonce' ); ?>
 			</p>
 			<?php endforeach; ?>
 		</div>

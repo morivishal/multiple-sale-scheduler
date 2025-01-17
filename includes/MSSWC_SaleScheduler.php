@@ -2,26 +2,28 @@
 /**
  * Save product data to database.
  *
- * @class Sale_Scheduler
- * @package MSS\Classes
+ * @class SaleScheduler
+ * @package MSSW\Classes
  * @since 1.0.0
  */
 
-namespace Multiplesalescheduler\Mss;
+namespace MSSWC\Includes;
+
+use Exception;
 
 /**
  * Save scheduled sales class.
  */
-class SaleScheduler {
+class MSSWC_SaleScheduler {
 
 	/**
 	 * Constructer function to init Sale_Scheduler.
 	 */
 	public function __construct() {
-		add_action( 'save_post', array( $this, 'mss_save_scheduled_sales' ) );
-		add_filter( 'woocommerce_product_get_price', array( $this, 'mss_display_scheduled_sale_prices' ), 10, 2 );
-		add_filter( 'woocommwrce_product_get_sale_price', array( $this, 'mss_display_scheduled_sale_prices' ), 10, 2 );
-		add_filter( 'woocommerce_get_price_html', array( $this, 'mss_update_sale_price_html' ), 10, 2 );
+		add_action( 'save_post', array( $this, 'msswc_save_scheduled_sales' ) );
+		add_filter( 'woocommerce_product_get_price', array( $this, 'msswc_display_scheduled_sale_prices' ), 10, 2 );
+		add_filter( 'woocommwrce_product_get_sale_price', array( $this, 'msswc_display_scheduled_sale_prices' ), 10, 2 );
+		add_filter( 'woocommerce_get_price_html', array( $this, 'msswc_update_sale_price_html' ), 10, 2 );
 	}
 
 	/**
@@ -29,17 +31,35 @@ class SaleScheduler {
 	 *
 	 * @param int $post_id Post ID.
 	 */
-	public function mss_save_scheduled_sales( $post_id ) {
-		$product = wc_get_product( $post_id );
+	public function msswc_save_scheduled_sales( $post_id ) {
 
-		if ( ! $product ) {
-			return;
-		}
-		$sale_prices    = isset( $_POST['schedule_price'] ) ? $_POST['schedule_price'] : array();
-		$schedule_start = isset( $_POST['schedule_start'] ) ? $_POST['schedule_start'] : array();
-		$schedule_end   = isset( $_POST['schedule_end'] ) ? $_POST['schedule_end'] : array();
+		try {
+			if ( ! isset( $_POST['msswc_meta_nonce'] ) || wp_verify_nonce( sanitize_key( $_POST['msswc_meta_nonce'] ) ) ) {
+				throw new \Error( 'Security check failed.' );
+			}
 
-		if ( ! empty( $sale_prices ) && ! empty( $schedule_start ) && ! empty( $schedule_end ) ) {
+			if ( ! current_user_can( 'edit_products', $post_id ) ) {
+				throw new \Error( 'User is not capabal.' );
+			}
+
+			$product = wc_get_product( $post_id );
+
+			// If the product doesn't exist.
+			if ( ! $product ) {
+				return;
+			}
+
+			$sale_prices    = isset( $_POST['schedule_price'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['schedule_price'] ) ) : array();
+			$schedule_start = isset( $_POST['schedule_start'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['schedule_start'] ) ) : array();
+			$schedule_end   = isset( $_POST['schedule_end'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['schedule_end'] ) ) : array();
+
+			if ( empty( $sale_prices ) || empty( $schedule_start ) || empty( $schedule_end ) ) {
+				return;
+			}
+			if ( count( $sale_prices ) !== count( $schedule_start ) || count( $sale_prices ) !== count( $schedule_end ) ) {
+				return;
+			}
+
 			$sale_array = array(
 				'sale_prices'   => $sale_prices,
 				'start_dates'   => $schedule_start,
@@ -48,7 +68,9 @@ class SaleScheduler {
 				'id'            => $post_id,
 			);
 
-			$this->update_product_meta_for_multi_sale_scheduler( $sale_array );
+			$this->msswc_update_product_meta( $sale_array );
+		} catch ( Exception $e ) {
+			wc_add_notice( $e->getMessage(), 'error' );
 		}
 	}
 
@@ -57,7 +79,7 @@ class SaleScheduler {
 	 *
 	 * @param array $sale_array Sale array.
 	 */
-	private function update_product_meta_for_multi_sale_scheduler( $sale_array ) {
+	private function msswc_update_product_meta( $sale_array ) {
 		$schedule_sale = array();
 
 		foreach ( $sale_array['sale_prices'] as $index => $sale_price ) {
@@ -81,7 +103,7 @@ class SaleScheduler {
 	 * @param string     $price The product price (can be regular or sale price).
 	 * @param WC_Product $product WC_Product object.
 	 */
-	public function mss_display_scheduled_sale_prices( $price, $product ) {
+	public function msswc_display_scheduled_sale_prices( $price, $product ) {
 		$schedule_sales = get_post_meta( $product->get_id(), '_schedule_sales', true );
 
 		if ( empty( $schedule_sales ) ) {
@@ -116,7 +138,7 @@ class SaleScheduler {
 	 *
 	 * @return string
 	 */
-	public function mss_update_sale_price_html( $price_html, $product ) {
+	public function msswc_update_sale_price_html( $price_html, $product ) {
 		$regular_price = $product->get_regular_price();
 		$price         = $product->get_price();
 		$is_on_sale    = $product->is_on_sale();
