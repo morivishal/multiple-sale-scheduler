@@ -9,12 +9,12 @@ class ComposerStaticInit6f39a0d0c6791b8e723b76882c88d178
     public static $prefixLengthsPsr4 = array (
         'M' => 
         array (
-            'Multiplesalescheduler\\Mss\\' => 26,
+            'MSSWC\\Includes\\' => 15,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Multiplesalescheduler\\Mss\\' => 
+        'MSSWC\\Includes\\' => 
         array (
             0 => __DIR__ . '/../..' . '/includes',
         ),
@@ -22,6 +22,9 @@ class ComposerStaticInit6f39a0d0c6791b8e723b76882c88d178
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'MSSWC\\Includes\\MSSWC_MultipleSaleScheduler' => __DIR__ . '/../..' . '/includes/MSSWC_MultipleSaleScheduler.php',
+        'MSSWC\\Includes\\MSSWC_ProductMetaFields' => __DIR__ . '/../..' . '/includes/MSSWC_ProductMetaFields.php',
+        'MSSWC\\Includes\\MSSWC_SaleScheduler' => __DIR__ . '/../..' . '/includes/MSSWC_SaleScheduler.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

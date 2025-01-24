@@ -2,29 +2,30 @@
 /**
  * Add new fields in product meta tabs.
  *
- * @class MSS_Product_Meta_Fields
- * @package MSS\Classes
+ * @package Multiple Sale Scheduler
  * @since 1.0.0
  */
 
-namespace Multiplesalescheduler\Mss;
+namespace MSSWC\Includes;
 
 /**
  * Add new fields in product meta tabs.
+ *
+ * @version 1.0.0
  */
-class ProductMetaFields {
+class MSSWC_ProductMetaFields {
 
 	/**
 	 * Constructer function to init Sale_Scheduler.
 	 */
 	public function __construct() {
-		add_action( 'woocommerce_product_options_pricing', array( $this, 'mss_add_product_meta_fields' ) );
+		add_action( 'woocommerce_product_options_pricing', array( $this, 'msswc_add_product_meta_fields' ) );
 	}
 
 	/**
 	 * Add custom fields in product edit page.
 	 */
-	public function mss_add_product_meta_fields() {
+	public function msswc_add_product_meta_fields() {
 		global $post;
 		$schedule_prices = get_post_meta( $post->ID, '_schedule_sales', true ) ? get_post_meta( $post->ID, '_schedule_sales', true ) : array(
 			array(
@@ -60,6 +61,7 @@ class ProductMetaFields {
 			</p>
 			<?php endforeach; ?>
 		</div>
+		<?php wp_nonce_field( 'msswc_save_scheduled_sales_nonce', 'msswc_meta_nonce' ); ?>
 		<p>
 			<button type="button" class="button" id="add-schedule">Add Schedule</button>
 		</p>
