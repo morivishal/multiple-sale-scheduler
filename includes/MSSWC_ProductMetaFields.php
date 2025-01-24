@@ -2,8 +2,7 @@
 /**
  * Add new fields in product meta tabs.
  *
- * @class ProductMetaFields
- * @package MSSW\Classes
+ * @package Multiple Sale Scheduler
  * @since 1.0.0
  */
 
@@ -11,6 +10,8 @@ namespace MSSWC\Includes;
 
 /**
  * Add new fields in product meta tabs.
+ *
+ * @version 1.0.0
  */
 class MSSWC_ProductMetaFields {
 
@@ -57,10 +58,10 @@ class MSSWC_ProductMetaFields {
 				placeholder="End Date ( YYYY-MM-DD )*" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])"
 				autocomplete="off" style="width: 30%; margin-left: 1%;">
 				<a href="#" class="remove_sale remove_row delete">Remove</a>
-				<?php wp_nonce_field( 'msswc_save_scheduled_sales_nonce', 'msswc_meta_nonce' ); ?>
 			</p>
 			<?php endforeach; ?>
 		</div>
+		<?php wp_nonce_field( 'msswc_save_scheduled_sales_nonce', 'msswc_meta_nonce' ); ?>
 		<p>
 			<button type="button" class="button" id="add-schedule">Add Schedule</button>
 		</p>

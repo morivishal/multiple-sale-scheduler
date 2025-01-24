@@ -3,6 +3,7 @@
  * Functions that wrap wc_get_product_ids_on_sale() woocommerce function.
  *
  * @package Multiple Sale Scheduler
+ * @since 1.0.0
  */
 
 if ( ! function_exists( 'msswc_get_product_ids_on_sale' ) ) {

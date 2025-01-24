@@ -2,10 +2,7 @@
 /**
  * The core plugin class.
  *
- * This is used to define internationalization.
- *
- * @class MSSWC_MultipleSaleScheduler
- * @package MSS
+ * @package Multiple Sale Scheduler
  * @since 1.0.0
  */
 
@@ -13,6 +10,8 @@ namespace MSSWC\Includes;
 
 /**
  * Core plugin class.
+ *
+ * @version 1.0.0
  */
 class MSSWC_MultipleSaleScheduler {
 
@@ -32,7 +31,7 @@ class MSSWC_MultipleSaleScheduler {
 		wp_register_style( 'msswc-style', MSSWC_PLUGIN_DIR_URL . '/assets/css/style.css', '', MSSWC_VERSION );
 		wp_enqueue_style( 'msswc-style' );
 
-		wp_register_script( 'msswc-sale-scheduler', MSSWC_PLUGIN_DIR_URL . '/assets/js/sale-scheduler.js', array(), MSSWC_VERSION, true );
+		wp_register_script( 'msswc-sale-scheduler', MSSWC_PLUGIN_DIR_URL . '/assets/js/sale-scheduler.min.js', array(), MSSWC_VERSION, true );
 		wp_enqueue_script( 'msswc-sale-scheduler' );
 	}
 }

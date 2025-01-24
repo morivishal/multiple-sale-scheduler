@@ -81,11 +81,7 @@ jQuery(document).ready(($) => {
     if ( !salePrice ) {
       return;	
     }
-    if ( salePrice < 0 ) {
-      $(this).val("");
-      $(this)[0].setCustomValidity("Please enter a price greater than 0.");
-      $(this)[0].reportValidity();
-    } else if ( salePrice >= regularPrice ) {
+    if ( salePrice >= regularPrice ) {
       $(this).val("");
     } else {
       $(this).val(parseFloat(salePrice).toFixed(2));

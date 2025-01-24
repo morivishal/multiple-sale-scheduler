@@ -3,7 +3,6 @@
  * Plugin name: Multiple Sale Scheduler for WooCommerce
  *
  * Description: Plugin that enables you to easily schedule multiple sales in WooCommerce. It has been tested and works seamlessly with both single and grouped product types.
- * Version: 1.0.0
  * Author: Vishal Mori
  * Author URI: https://profiles.wordpress.org/vishalmori/
  * Requires Plugins: woocommerce
