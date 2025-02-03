@@ -1,0 +1,18 @@
+{
+    "name": "multiplesalescheduler/mss",
+    "autoload": {
+        "psr-4": {
+            "MSSWC\\Includes\\": "./includes"
+        }
+    },
+    "authors": [
+        {
+            "name": "vishalMori",
+            "email": "vishal@krishaweb.com"
+        }
+    ],
+    "require": {},
+    "config": {
+        "optimize-autoloader": true
+    }
+}
